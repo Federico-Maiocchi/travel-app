@@ -7,74 +7,102 @@
 <h1>Lista Viaggi</h1>
 
 <p>
-    <a asp-action="Create">Aggiungi nuovo viaggio</a>
+    <a asp-action="Create" class="btn btn-primary">Aggiungi nuovo viaggio</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <!-- UserActivity -->
-            <!--
-            <th>
-                @Html.DisplayNameFor(model => model.CretedById)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CretedOn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedById)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedOn)
-            </th>
-            -->
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CretedById)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CretedOn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedById)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedOn)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="card">
+    <!--Card Header -->
+    <div class="card-header">
+        <h3 class="card-title">Lista Viaggi</h3>
+    </div>
+    <!--Card body -->
+    <div class="card-body">
+        <!--tabella viaggi-->
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.StartDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EndDate)
+                    </th>
+                    <!-- UserActivity -->
+                    <!--
+                    <th>
+                        @Html.DisplayNameFor(model => model.CretedById)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CretedOn)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedById)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
+                    </th>
+                    -->
+                    
+                    <!--Pulsanti crud -->
+                    <th>
+                        Modifica
+                    </th>
+                    <th>
+                        Dettaglio
+                    </th>
+                    <th>
+                        Cancella
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EndDate)
+                    </td>
+                    <!--UserActivity-->
+                    <!--
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CretedById)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CretedOn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedById)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifiedOn)
+                    </td>
+                    -->
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i></a>
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
+</div>

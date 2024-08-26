@@ -20,6 +20,10 @@ namespace travel_app
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddControllersWithViews();
 
+            //Autenticazioni / Autorizzazioni
+            builder.Services.AddAuthentication();
+            builder.Services.AddAuthorization();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -39,6 +43,8 @@ namespace travel_app
 
             app.UseRouting();
 
+            //Autenticazioni
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(

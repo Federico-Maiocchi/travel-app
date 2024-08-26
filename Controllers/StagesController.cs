@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -10,22 +11,25 @@ using travel_app.Models;
 
 namespace travel_app.Controllers
 {
-    public class TravelsController : Controller
+    public class StagesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConfiguration _configuration;
 
-        public TravelsController(ApplicationDbContext context)
+        public StagesController(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
         }
 
-        // GET: Travels
+        // GET: Stages
         public async Task<IActionResult> Index()
         {
-            return View(await _context.travels.ToListAsync());
+            var applicationDbContext = _context.stages.Include(s => s.Travel);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Travels/Details/5
+        // GET: Stages/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,48 +37,65 @@ namespace travel_app.Controllers
                 return NotFound();
             }
 
-            var travel = await _context.travels
+            var stage = await _context.stages
+                .Include(s => s.Travel)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (travel == null)
+            if (stage == null)
             {
                 return NotFound();
             }
 
-            return View(travel);
+            return View(stage);
         }
 
-        // GET: Travels/Create
+        // GET: Stages/Create
         public IActionResult Create()
         {
+            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Title");
             return View();
         }
 
-        // POST: Travels/Create
+        // POST: Stages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Travel travel)
+        public async Task<IActionResult> Create(Stage stage, IFormFile stagePhoto)
         {
-            travel.CretedById = "Admin";
-            travel.CretedOn = DateTime.Now;
-
+            stage.CretedById = "Admin";
+            stage.CretedOn = DateTime.Now;
 
             /*if (ModelState.IsValid)
             {
-                _context.Add(travel);
+                _context.Add(stage);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(travel);
+            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Id", stage.TravelId);
+            return View(stage);
             */
 
-            _context.Add(travel);
+            if (stagePhoto.Length > 0)
+            {
+                var fileName = "EmployeePhoto_" + DateTime.Now.ToString("yyyymmddhhmmss") + "_" + stagePhoto.FileName;
+
+                var path = _configuration["FileSettings:UploadFolder"]!;
+
+                var filePath = Path.Combine(path, fileName);
+
+                var stream = new FileStream(filePath, FileMode.Create);
+
+                await stagePhoto.CopyToAsync(stream);
+
+                stage.Image = fileName;
+            }
+
+            _context.Add(stage);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Travels/Edit/5
+        // GET: Stages/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,22 +103,23 @@ namespace travel_app.Controllers
                 return NotFound();
             }
 
-            var travel = await _context.travels.FindAsync(id);
-            if (travel == null)
+            var stage = await _context.stages.FindAsync(id);
+            if (stage == null)
             {
                 return NotFound();
             }
-            return View(travel);
+            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Title", stage.TravelId);
+            return View(stage);
         }
 
-        // POST: Travels/Edit/5
+        // POST: Stages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,StartDate,EndDate,CretedById,CretedOn,ModifiedById,ModifiedOn")] Travel travel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Image,Note,Vote,Date,Latitude,Longitude,TravelId,Completed,CretedById,CretedOn,ModifiedById,ModifiedOn")] Stage stage)
         {
-            if (id != travel.Id)
+            if (id != stage.Id)
             {
                 return NotFound();
             }
@@ -106,12 +128,12 @@ namespace travel_app.Controllers
             {
                 try
                 {
-                    _context.Update(travel);
+                    _context.Update(stage);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TravelExists(travel.Id))
+                    if (!StageExists(stage.Id))
                     {
                         return NotFound();
                     }
@@ -122,19 +144,20 @@ namespace travel_app.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(travel);
+            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Id", stage.TravelId);
+            return View(stage);
             */
 
             try
             {
-                travel.ModifiedById = "Admin";
-                travel.ModifiedOn = DateTime.Now;
-                _context.Update(travel);
+                stage.ModifiedById = "Admin";
+                stage.ModifiedOn = DateTime.Now;
+                _context.Update(stage);
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TravelExists(travel.Id))
+                if (!StageExists(stage.Id))
                 {
                     return NotFound();
                 }
@@ -146,7 +169,7 @@ namespace travel_app.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Travels/Delete/5
+        // GET: Stages/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -154,34 +177,35 @@ namespace travel_app.Controllers
                 return NotFound();
             }
 
-            var travel = await _context.travels
+            var stage = await _context.stages
+                .Include(s => s.Travel)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (travel == null)
+            if (stage == null)
             {
                 return NotFound();
             }
 
-            return View(travel);
+            return View(stage);
         }
 
-        // POST: Travels/Delete/5
+        // POST: Stages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var travel = await _context.travels.FindAsync(id);
-            if (travel != null)
+            var stage = await _context.stages.FindAsync(id);
+            if (stage != null)
             {
-                _context.travels.Remove(travel);
+                _context.stages.Remove(stage);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TravelExists(int id)
+        private bool StageExists(int id)
         {
-            return _context.travels.Any(e => e.Id == id);
+            return _context.stages.Any(e => e.Id == id);
         }
     }
 }

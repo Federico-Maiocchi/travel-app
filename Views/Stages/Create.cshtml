@@ -1,0 +1,146 @@
+﻿@model travel_app.Models.Stage
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Crea nuova tappa - Stages/Create</h1>
+
+<div class="card">
+    <!--Card Header -->
+    <div class="card-header">
+        <h4>Creazione nuova tappa</h4>
+    </div>
+    <!--Card body -->
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="Create" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Image" class="control-label"></label>
+                                <input type="file" accept=".png, .jpg, .jpeg" id="Image" name="stagePhoto" class="form-control">
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            <!--
+                            <div class="form-group">
+                                <label asp-for="Image" class="control-label"></label>
+                                <input asp-for="Image" class="form-control" />
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                            -->
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Note" class="control-label"></label>
+                                <input asp-for="Note" class="form-control" />
+                                <span asp-validation-for="Note" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Vote" class="control-label"></label>
+                                <input asp-for="Vote" class="form-control" />
+                                <span asp-validation-for="Vote" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Date" class="control-label"></label>
+                                <input asp-for="Date" class="form-control" />
+                                <span asp-validation-for="Date" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Latitude" class="control-label"></label>
+                                <input asp-for="Latitude" class="form-control" />
+                                <span asp-validation-for="Latitude" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Longitude" class="control-label"></label>
+                                <input asp-for="Longitude" class="form-control" />
+                                <span asp-validation-for="Longitude" class="text-danger"></span>
+                            </div>
+                        </div>
+                         <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="TravelId" class="control-label"></label>
+                                <select asp-for="TravelId" class="form-control" asp-items="ViewBag.TravelId"></select>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            <div class="form-group form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" asp-for="Completed" /> @Html.DisplayNameFor(model => model.Completed)
+                                </label>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="col-md-6 ">
+                            
+                            <div class="form-group">
+                                <label asp-for="CretedById" class="control-label"></label>
+                                <input asp-for="CretedById" class="form-control" />
+                                <span asp-validation-for="CretedById" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CretedOn" class="control-label"></label>
+                                <input asp-for="CretedOn" class="form-control" />
+                                <span asp-validation-for="CretedOn" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ModifiedById" class="control-label"></label>
+                                <input asp-for="ModifiedById" class="form-control" />
+                                <span asp-validation-for="ModifiedById" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ModifiedOn" class="control-label"></label>
+                                <input asp-for="ModifiedOn" class="form-control" />
+                                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
+                            </div>
+                            
+                        </div>
+                        -->
+                    </div>                 
+                    
+                    <!-- Bottoni -->
+                    <div class="form-group">
+                        <div class="row">
+                            <!-- Conferma -->
+                            <div class="col-md-2 ">
+                                <input type="submit" value="Crea" class="btn btn-primary" />
+                            </div>
+                            <!-- Torna all' Travels/INDEX -->
+                            <div class="col-md-2 ">
+                                <a asp-action="Index" class="btn btn-danger">Torna Alla lista</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -14,6 +14,6 @@ namespace travel_app.Models
 
         public DateTime EndDate { get; set; }
 
-        public ICollection<Stage> Stages { get; set; }
+        public List<Stage> Stages { get; set; }
     }
 }

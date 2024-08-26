@@ -1,9 +1,88 @@
 ﻿@model travel_app.Models.Travel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
+<h1>Aggiungi Viaggio -Travels/Index</h1>
+
+<div class="card">
+
+    <!--Card Header -->
+    <div class="card-header">
+        <h4>Creazione nuovo viaggio</h4>
+    </div>
+    <!--Card body -->
+    <div class="card-body">
+        <!--<table id="example1" class="table table-bordered table-striped">-->
+        <div class="row">
+            <div class="col-md-12">
+                <!--form-->
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="row">
+
+                        <!-- Titolo viaggio-->
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Title" class="control-label"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Descrizione -->
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <input asp-for="Description" class="form-control" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Inzio viaggio -->
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="StartDate" class="control-label"></label>
+                                <input asp-for="StartDate" type="date" class="form-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Fine viaggio -->
+                        <div class="col-md-6 ">
+                            <div class="form-group">
+                                <label asp-for="EndDate" class="control-label"></label>
+                                <input asp-for="EndDate" type="date" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Bottoni -->
+                    <div class="form-group">
+                        <div class="row">
+                            <!-- Conferma -->
+                            <div class="col-md-2 ">
+                                <input type="submit" value="Modifica" class="btn btn-primary" />
+                            </div>
+                            <!-- Torna all' Travels/INDEX -->
+                            <div class="col-md-2 ">
+                                <a asp-action="Index" class="btn btn-danger">Torna Alla lista</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--
 <h1>Edit</h1>
 
 <h4>Travel</h4>
@@ -60,9 +139,11 @@
     </div>
 </div>
 
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+-->
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

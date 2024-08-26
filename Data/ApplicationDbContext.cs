@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using travel_app.Models;
 
 namespace travel_app.Data
 {
@@ -9,5 +10,10 @@ namespace travel_app.Data
             : base(options)
         {
         }
+
+        public DbSet<Travel> travels { get; set; }
+        
+        public DbSet<Stage> stages { get; set; }
+
     }
 }

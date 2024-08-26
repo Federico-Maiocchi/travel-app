@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<travel_app.Models.Travel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista Viaggi";
 }
 
-<h1>Lista Viaggi</h1>
+<h1>Lista Viaggi - Index</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-primary">Aggiungi nuovo viaggio</a>
@@ -18,20 +18,29 @@
     <!--Card body -->
     <div class="card-body">
         <!--tabella viaggi-->
+
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Title)
+                        <!--@Html.DisplayNameFor(model => model.Title)-->
+                        
+                        Titolo
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Description)
+                        <!--@Html.DisplayNameFor(model => model.Description)-->
+                        
+                        Descrizione
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.StartDate)
+                        <!--@Html.DisplayNameFor(model => model.StartDate)-->
+                        
+                        Inzio
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.EndDate)
+                        <!--@Html.DisplayNameFor(model => model.EndDate)-->
+                        
+                        Fine
                     </th>
                     <!-- UserActivity -->
                     <!--
@@ -62,46 +71,47 @@
                 </tr>
             </thead>
             <tbody>
-        @foreach (var item in Model) {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StartDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EndDate)
-                    </td>
-                    <!--UserActivity-->
-                    <!--
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CretedById)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CretedOn)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModifiedById)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ModifiedOn)
-                    </td>
-                    -->
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i></a>
-                    </td>
-                    <td>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-        }
+                @foreach (var item in Model) {
+                        
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.EndDate)
+                            </td>
+                            <!--UserActivity-->
+                            <!--
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CretedById)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CretedOn)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedById)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ModifiedOn)
+                            </td>
+                            -->
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i></a>
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i></a>
+                            </td>
+                            <td>
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                }
             </tbody>
         </table>
     </div>

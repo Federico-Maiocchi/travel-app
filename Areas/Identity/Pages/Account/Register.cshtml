@@ -33,10 +33,11 @@
                 <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
                    
                     <div class="input-group mb-3">
-                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                         <!--
                         <label asp-for="Input.Email">Email</label>
                         -->
+                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="Inserisci mail - name@example.com" />
+                        
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                         <div class="input-group-append">
                             <div class="input-group-text">
@@ -45,7 +46,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Inserisci password" />
                         <!--
                         <label asp-for="Input.Password">Password</label>
                         -->
@@ -57,7 +58,7 @@
                         </div>
                     </div>
                     <div class="input-group mb-3">
-                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="Conferma password" />
                         <!--
                         <label asp-for="Input.ConfirmPassword">Confirm Password</label>
                         -->
@@ -81,7 +82,10 @@
                         -->
                         <!-- /.col -->
                         <div class="col-4">
-                            <button id="registerSubmit" type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button id="registerSubmit" type="submit" class="btn btn-primary btn-block">Registra</button>
+                        </div>
+                        <div class="col-6">
+                            <a class="btn btn-danger btn-block" asp-area="Identity" asp-page="/Account/Login">Torna al Login</a>
                         </div>
                         <!-- /.col -->
                     </div>

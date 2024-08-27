@@ -50,7 +50,7 @@ namespace travel_app.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Ricordati di me?")]
             public bool RememberMe { get; set; }
         }
 

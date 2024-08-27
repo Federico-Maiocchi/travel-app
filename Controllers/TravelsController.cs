@@ -41,6 +41,9 @@ namespace travel_app.Controllers
                 return NotFound();
             }
 
+            //conteggio delle tappe nel viaggio
+            ViewBag.TotalStages = travel.Stages.Count;
+
             return View(travel);
         }
 

@@ -34,6 +34,7 @@ namespace travel_app.Controllers
             }
 
             var travel = await _context.travels
+                .Include(m => m.Stages)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (travel == null)
             {

@@ -82,95 +82,104 @@
             </thead>
             <tbody>
                 @foreach (var item in Model) {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Title)
-                            </td>
-                            <!--
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <!--
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Description)
+                        </td>
+                        -->
+                        <!--
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Image)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Note)
+                        </td>
                             -->
+                        <td>
                             <!--
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Image)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Note)
-                            </td>
-                                -->
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Vote)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
-                            <!--
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Latitude)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Longitude)
-                            </td>
-                                -->
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Travel.Title)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Completed)
-                            </td>
-                            <!--
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CretedById)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CretedOn)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedById)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedOn)
-                            </td>
+                            @Html.DisplayFor(modelItem => item.Vote)
                             -->
-                            <td>
-                                <div class="dropdown btn btn-warning">
-                                    <a class="dropdown-toggle text-dark" data-toggle="dropdown" href="#">
-                                        Azioni <span class="caret"></span>
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li class="dropdown-item">
-                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
-                                        </li>
-                                        <li class="dropdown-divider"></li>
-                                        <li class="dropdown-item">
-                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
-                                        </li>
-                                        <li class="dropdown-divider"></li>
-                                        <li class="dropdown-item">
-                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
-                                        </li>
-                                        <!--
-                                        <li class="dropdown-divider"></li>
-                                        <li class="dropdown-item">
-                                            <a asp-action="ApproveLeave" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-check"></i> Approve</a>
-                                        </li>
-                                        <li class="dropdown-divider"></li>
-                                        <li class="dropdown-item">
-                                            <a asp-action="RejectLeave" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-xmark"></i> Reject</a>
-                                        </li>
-                                        -->
-                                    </ul>
-                                </div>
-                            </td>
-                            <!--
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                            </td>
+                            @{
+                                var vote = item.Vote; // Ottieni il valore del voto (numero)
+                            }
+                            @for (int i = 0; i < vote; i++)
+                            {
+                            <i class="fas fa-star text-warning"></i> <!-- Mostra un'icona stella per ogni voto -->
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <!--
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Latitude)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Longitude)
+                        </td>
                             -->
-                        </tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Travel.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Completed)
+                        </td>
+                        <!--
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CretedById)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CretedOn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedById)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ModifiedOn)
+                        </td>
+                        -->
+                        <td>
+                            <div class="dropdown btn btn-warning">
+                                <a class="dropdown-toggle text-dark" data-toggle="dropdown" href="#">
+                                    Azioni <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item">
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li class="dropdown-item">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li class="dropdown-item">
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                    </li>
+                                    <!--
+                                    <li class="dropdown-divider"></li>
+                                    <li class="dropdown-item">
+                                        <a asp-action="ApproveLeave" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-check"></i> Approve</a>
+                                    </li>
+                                    <li class="dropdown-divider"></li>
+                                    <li class="dropdown-item">
+                                        <a asp-action="RejectLeave" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-xmark"></i> Reject</a>
+                                    </li>
+                                    -->
+                                </ul>
+                            </div>
+                        </td>
+                        <!--
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                        -->
+                    </tr>
                 }
             </tbody>
         </table>

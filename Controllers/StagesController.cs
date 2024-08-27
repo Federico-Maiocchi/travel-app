@@ -75,9 +75,9 @@ namespace travel_app.Controllers
             return View(stage);
             */
 
-            if (stagePhoto.Length > 0)
+            /*if (stagePhoto.Length > 0)
             {
-                var fileName = "EmployeePhoto_" + DateTime.Now.ToString("yyyymmddhhmmss") + "_" + stagePhoto.FileName;
+                var fileName = "StagePhoto_" + DateTime.Now.ToString("yyyymmddhhmmss") + "_" + stagePhoto.FileName;
 
                 var path = _configuration["FileSettings:UploadFolder"]!;
 
@@ -88,6 +88,29 @@ namespace travel_app.Controllers
                 await stagePhoto.CopyToAsync(stream);
 
                 stage.Image = fileName;
+            }*/
+
+            if (stagePhoto.Length > 0)
+            {
+                var fileName = "StagePhoto_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + stagePhoto.FileName;
+
+                // Salva l'immagine sotto wwwroot
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "stages");
+
+                // Se non esiste rrea la directory 
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath); 
+                }
+
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await stagePhoto.CopyToAsync(stream);
+                }
+
+                stage.Image = fileName; // Salva solo il nome del file nel database
             }
 
             _context.Add(stage);
@@ -117,7 +140,7 @@ namespace travel_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,Image,Note,Vote,Date,Latitude,Longitude,TravelId,Completed,CretedById,CretedOn,ModifiedById,ModifiedOn")] Stage stage)
+        public async Task<IActionResult> Edit(int id, Stage stage, IFormFile stagePhoto)
         {
             if (id != stage.Id)
             {
@@ -147,6 +170,43 @@ namespace travel_app.Controllers
             ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Id", stage.TravelId);
             return View(stage);
             */
+
+            // Trova lo stage corrente nel database
+            var currentStage = await _context.stages.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
+
+            if (currentStage == null)
+            {
+                return NotFound();
+            }
+
+            // Gestione del caricamento del file immagine
+            if (stagePhoto != null && stagePhoto.Length > 0)
+            {
+                var fileName = "StagePhoto_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + stagePhoto.FileName;
+
+                // Salva l'immagine sotto wwwroot
+                var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "stages");
+
+                // Se non esiste, crea la directory 
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await stagePhoto.CopyToAsync(stream);
+                }
+
+                stage.Image = fileName; // Salva solo il nome del file nel database
+            }
+            else
+            {
+                // Mantieni l'immagine esistente
+                stage.Image = currentStage.Image;
+            }
 
             try
             {

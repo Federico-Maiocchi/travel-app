@@ -125,7 +125,9 @@ namespace travel_app.Controllers
 
             _context.Add(stage);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+
+            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
         }
 
         // GET: Stages/Edit/5
@@ -236,7 +238,8 @@ namespace travel_app.Controllers
                     throw;
                 }
             }
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
         }
 
         // GET: Stages/Delete/5
@@ -270,7 +273,8 @@ namespace travel_app.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
         }
 
         private bool StageExists(int id)

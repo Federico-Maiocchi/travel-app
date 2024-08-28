@@ -11,6 +11,7 @@
     <div class="card-body">
         <h4>@Html.DisplayFor(model => model.Title)</h4>
         <hr />
+        <!--
         <dl class="row">
             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.Title)
@@ -61,12 +62,89 @@
                 @Html.DisplayFor(model => model.ModifiedOn)
             </dd>
         </dl>
+        -->
 
         <div class="row">
+            <div class="row">
+                <div class="fw-bold">
+                    Descrizione:
+                </div>
+                <div>
+                    @Html.DisplayFor(model => model.Description)
+                </div>
+            </div>
+
+            <div class="d-flex pt-3">
+                <div class="col-3 d-flex">
+                    <div class="fw-bold ">
+                        Data inizio:
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => model.StartDate)
+                    </div>
+                </div>
+
+                <div class="col-3 d-flex">
+                    <div class="fw-bold">
+                        Data fine:
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => model.EndDate)
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="d-flex pt-3">
+                <div class="col-3 d-flex">
+                    <div class="fw-bold">
+                        Creato da:
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => model.CretedById)
+                    </div>
+                </div>
+               
+                <div class="col-3 d-flex">
+                    <div class="fw-bold">
+                        Creato il:
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => model.CretedOn)
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex pt-3">
+                <div class="col-3 d-flex">
+                    <div class="fw-bold">
+                        Modificato da:
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => model.ModifiedById)
+                    </div>
+                </div>
+
+                <div class="col-3 d-flex">
+                    <div class="fw-bold">
+                        Nodificato il:
+                    </div>
+                    <div>
+                        @Html.DisplayFor(model => model.ModifiedOn)
+                    </div>
+                </div> 
+            </div>
+
+        </div>
+
+        <div class="row pt-3">
             <h5>Tappe</h5>
             <p><strong>Totale Tappe:</strong> @ViewBag.TotalStages</p>
         </div>
         
+        <p>
+            <a asp-action="Create" asp-controller="Stages" asp-route-travelId="@Model.Id" class="btn btn-primary">Aggiungi tappa</a>
+        </p>
         @* @Html.DisplayFor(model => model.Stages ); *@
         
 
@@ -122,6 +200,19 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <div class="d-flex">
+                                        <div class="me-3">
+                                            <a asp-action="Edit" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
+                                        </div>
+                                        <div class="me-3">
+                                            <a asp-action="Details" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
+                                        </div>
+                                        <div>
+                                            <a asp-action="Delete" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                        </div> 
+                                    </div>
+                                </div>     
                             </div>
                         </div>
                     </div>

@@ -49,8 +49,18 @@ namespace travel_app.Controllers
         }
 
         // GET: Stages/Create
-        public IActionResult Create()
+        public IActionResult Create(int? travelId)
         {
+            if (travelId.HasValue)
+            {
+                var stage = new Stage
+                {
+                    TravelId = travelId.Value
+                };
+                ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Title");
+                return View(stage);
+            }
+
             ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Title");
             return View();
         }

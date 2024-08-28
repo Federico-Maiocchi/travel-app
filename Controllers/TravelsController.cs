@@ -22,7 +22,11 @@ namespace travel_app.Controllers
         // GET: Travels
         public async Task<IActionResult> Index()
         {
-            return View(await _context.travels.ToListAsync());
+            var travels = await _context.travels
+                .Include(m => m.Stages)
+                .ToListAsync();
+
+            return View(travels);
         }
 
         // GET: Travels/Details/5

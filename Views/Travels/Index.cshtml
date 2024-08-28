@@ -33,14 +33,18 @@
                         Descrizione
                     </th>
                     <th>
+                        <!--@Html.DisplayNameFor(model => model.Description)-->
+                        Tappe
+                    </th>
+                    <th>
                         <!--@Html.DisplayNameFor(model => model.StartDate)-->
                         
-                        Inzio
+                        Inzio Viaggio
                     </th>
                     <th>
                         <!--@Html.DisplayNameFor(model => model.EndDate)-->
                         
-                        Fine
+                        Fine Viaggio
                     </th>
                     <!-- UserActivity -->
                     <!--
@@ -79,6 +83,17 @@
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                            @if (item.Stages.Count > 0)
+                            {
+                            @Html.DisplayFor(modelItem => item.Stages.Count)
+                            }
+                            else
+                            {
+                                <p>zero tappe</p>
+                            }
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.StartDate)

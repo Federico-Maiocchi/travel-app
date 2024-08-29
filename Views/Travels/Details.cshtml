@@ -4,8 +4,13 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Dettaglio Viaggio - Travels/Edit</h1>
 
+<link rel="stylesheet" href="~/lib/leaflet/leaflet.css" rel="stylesheet">
+<link rel="stylesheet" href="~/lib/leaflet/leaflet.min.css" rel="stylesheet">
+
+    
+
+<h1>Dettaglio Viaggio - Travels/Edit</h1>
 <div class="card">
     <!--Card body -->
     <div class="card-body">
@@ -14,52 +19,52 @@
         <!--
         <dl class="row">
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Title)
+        @Html.DisplayNameFor(model => model.Title)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Title)
+        @Html.DisplayFor(model => model.Title)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.Description)
+        @Html.DisplayNameFor(model => model.Description)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.Description)
+        @Html.DisplayFor(model => model.Description)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.StartDate)
+        @Html.DisplayNameFor(model => model.StartDate)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.StartDate)
+        @Html.DisplayFor(model => model.StartDate)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.EndDate)
+        @Html.DisplayNameFor(model => model.EndDate)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.EndDate)
+        @Html.DisplayFor(model => model.EndDate)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CretedById)
+        @Html.DisplayNameFor(model => model.CretedById)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.CretedById)
+        @Html.DisplayFor(model => model.CretedById)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.CretedOn)
+        @Html.DisplayNameFor(model => model.CretedOn)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.CretedOn)
+        @Html.DisplayFor(model => model.CretedOn)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.ModifiedById)
+        @Html.DisplayNameFor(model => model.ModifiedById)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.ModifiedById)
+        @Html.DisplayFor(model => model.ModifiedById)
             </dd>
             <dt class = "col-sm-2">
-                @Html.DisplayNameFor(model => model.ModifiedOn)
+        @Html.DisplayNameFor(model => model.ModifiedOn)
             </dt>
             <dd class = "col-sm-10">
-                @Html.DisplayFor(model => model.ModifiedOn)
+        @Html.DisplayFor(model => model.ModifiedOn)
             </dd>
         </dl>
         -->
@@ -92,7 +97,7 @@
                         @Html.DisplayFor(model => model.EndDate)
                     </div>
                 </div>
-                
+
             </div>
 
             <div class="d-flex pt-3">
@@ -104,7 +109,7 @@
                         @Html.DisplayFor(model => model.CretedById)
                     </div>
                 </div>
-               
+
                 <div class="col-3 d-flex">
                     <div class="fw-bold">
                         Creato il:
@@ -132,7 +137,7 @@
                     <div>
                         @Html.DisplayFor(model => model.ModifiedOn)
                     </div>
-                </div> 
+                </div>
             </div>
 
         </div>
@@ -141,14 +146,14 @@
             <h5>Tappe</h5>
             <p><strong>Totale Tappe:</strong> @ViewBag.TotalStages</p>
         </div>
-        
+
         <p>
             <a asp-action="Create" asp-controller="Stages" asp-route-travelId="@Model.Id" class="btn btn-primary">Aggiungi tappa</a>
         </p>
         @* @Html.DisplayFor(model => model.Stages ); *@
-        
 
-        
+
+
 
         @if (Model.Stages != null && Model.Stages.Any())
         {
@@ -210,9 +215,9 @@
                                         </div>
                                         <div>
                                             <a asp-action="Delete" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
-                                        </div> 
+                                        </div>
                                     </div>
-                                </div>     
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -226,10 +231,10 @@
 
         <div id="map" style="width:100%; height:500px"></div>
 
-        
 
 
-        
+
+
         <!--Bottoni-->
         <div class="form-group pt-5">
             <div class="row">
@@ -243,14 +248,30 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
 </div>
 
-<@* script>
-    var map = L.map('map').setView([40.8188709, 2.1085536], 13);
+
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet-src.min.js"></script>
+
+
+<script>
+    var map = L.map('map').setView([42.6631201, 14.3033775], 6);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+        // maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-</script> *@
+
+
+    L.marker([45.4625942, 8.8823811]).addTo(map)
+        .bindPopup("Milano")
+        .openPopup();
+
+    L.marker([44.4992289, 11.2492838]).addTo(map)
+        .bindPopup("Bologna")
+        .openPopup();
+</script>
+

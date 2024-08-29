@@ -1,7 +1,15 @@
 ﻿@model travel_app.Models.Travel
+@using System.Text.Json
+@using System.Text.Json.Serialization
 
 @{
     ViewData["Title"] = "Details";
+
+    var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+    var jsModel = JsonSerializer.Serialize(Model, options);
 }
 
 
@@ -140,100 +148,104 @@
                 </div>
             </div>
 
+
+            <div class="d-flex align-items-center col-3 pt-5">
+                <div class="d-flex align-items-center me-4">
+                    <h3 class=" me-2">Tappe</h3>
+                    <p class="">(@ViewBag.TotalStages)</p>
+                </div>
+
+                <div>
+                    <a asp-action="Create" asp-controller="Stages" asp-route-travelId="@Model.Id" class="btn btn-primary">Aggiungi tappa</a>
+                </div>
+            </div>
+
+
+            @* @Html.DisplayFor(model => model.Stages ); *@
         </div>
 
-        <div class="row pt-3">
-            <h5>Tappe</h5>
-            <p><strong>Totale Tappe:</strong> @ViewBag.TotalStages</p>
-        </div>
-
-        <p>
-            <a asp-action="Create" asp-controller="Stages" asp-route-travelId="@Model.Id" class="btn btn-primary">Aggiungi tappa</a>
-        </p>
-        @* @Html.DisplayFor(model => model.Stages ); *@
-
-
-
-
-        @if (Model.Stages != null && Model.Stages.Any())
-        {
-            <div class="accordion" id="accordionExample">
-                @foreach (var stage in Model.Stages)
+        <div class="d-flex pt-1">
+            <div class="col-6">
+              
+                @if (Model.Stages != null && Model.Stages.Any())
                 {
-                    var uniqueId = $"collapse{stage.Id}"; // Genera un id univoco basato sull'id del stage
+                    <div class="accordion" id="accordionExample">
+                        @foreach (var stage in Model.Stages)
+                        {
+                            var uniqueId = $"collapse{stage.Id}"; // Genera un id univoco basato sull'id del stage
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="heading@stage.Id">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@uniqueId" aria-expanded="false" aria-controls="@uniqueId">
-                                @stage.Title
-                            </button>
-                        </h2>
-                        <div id="@uniqueId" class="accordion-collapse collapse" aria-labelledby="heading@stage.Id" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div>
-                                    <div class="row">
-                                        <div class="fw-bold">
-                                            Descrizione:
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="heading@stage.Id">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@uniqueId" aria-expanded="false" aria-controls="@uniqueId">
+                                        @stage.Title
+                                    </button>
+                                </h2>
+                                <div id="@uniqueId" class="accordion-collapse collapse" aria-labelledby="heading@stage.Id" data-bs-parent="#accordionExample">
+                                    <div class="accordion-body">
+                                        <div>
+                                            <div class="row">
+                                                <div class="fw-bold">
+                                                    Descrizione:
+                                                </div>
+                                                <div>
+                                                    @stage.Description
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
-                                            @stage.Description
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="row">
-                                        <div class="fw-bold">
-                                            Immagine:
-                                        </div>
-                                        <div>
-                                            @* @stage.Image *@
+                                            <div class="row">
+                                                <div class="fw-bold">
+                                                    Immagine:
+                                                </div>
+                                                <div>
+                                                    @* @stage.Image *@
 
-                                            <img src="@Url.Content($"~/uploads/stages/{stage.Image}")" alt="Immagine dello stage" class="img-fluid" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="row">
-                                        <div class="fw-bold">
-                                            Voto:
+                                                    <img src="@Url.Content($"~/uploads/stages/{stage.Image}")" alt="Immagine dello stage" class="img-fluid" />
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
-                                            @for (int i = 0; i < stage.Vote; i++)
-                                            {
-                                                <i class="fas fa-star text-warning"></i>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <div class="d-flex">
-                                        <div class="me-3">
-                                            <a asp-action="Edit" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
-                                        </div>
-                                        <div class="me-3">
-                                            <a asp-action="Details" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
+                                            <div class="row">
+                                                <div class="fw-bold">
+                                                    Voto:
+                                                </div>
+                                                <div>
+                                                    @for (int i = 0; i < stage.Vote; i++)
+                                                    {
+                                                        <i class="fas fa-star text-warning"></i>
+                                                    }
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
-                                            <a asp-action="Delete" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                            <div class="d-flex">
+                                                <div class="me-3">
+                                                    <a asp-action="Edit" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
+                                                </div>
+                                                <div class="me-3">
+                                                    <a asp-action="Details" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
+                                                </div>
+                                                <div>
+                                                    <a asp-action="Delete" asp-controller="Stages" asp-route-id="@stage.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
                     </div>
                 }
+                else
+                {
+                    <p>Non ci sono tappe</p>
+                }
             </div>
-        }
-        else
-        {
-            <p>Non ci sono tappe</p>
-        }
 
-        <div id="map" style="width:100%; height:500px"></div>
-
-
-
-
+            <div class="col-6">
+                <div id="map" style="width:100%; height:500px"></div>
+            </div>
+        </div>
 
         <!--Bottoni-->
         <div class="form-group pt-5">
@@ -258,20 +270,32 @@
 
 
 <script>
-    var map = L.map('map').setView([42.6631201, 14.3033775], 6);
+    const map = L.map('map').setView([42.6631201, 14.3033775], 6);
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         // maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
+    let jsModel = @Html.Raw(jsModel);
+    console.log(jsModel);
 
-    L.marker([45.4625942, 8.8823811]).addTo(map)
-        .bindPopup("Milano")
-        .openPopup();
+    
+    for (let i = 0; i < jsModel.Stages.$values.length; i++) {
+        let stage = jsModel.Stages.$values[i];
 
-    L.marker([44.4992289, 11.2492838]).addTo(map)
-        .bindPopup("Bologna")
-        .openPopup();
+        // Converti la latitudine e la longitudine al formato corretto (se necessario)
+        let latitude = stage.Latitude / 10000000; // Se la latitudine è memorizzata come intero, dividi per 10^7
+        let longitude = stage.Longitude / 10000000; // Se la longitudine è memorizzata come intero, dividi per 10^7
+
+        // console.log("Latitudine: " + latitude);
+        // console.log("Longitudine: " + longitude);
+
+        // Aggiungi il marker alla mappa con la latitudine e longitudine
+        L.marker([latitude, longitude]).addTo(map)
+            .bindPopup(stage.Title ) // Mostra il titolo della tappa nel popup
+            .openPopup();
+    }
+    
 </script>
 

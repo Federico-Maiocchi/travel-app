@@ -155,7 +155,14 @@
                                                 <div>
                                                     @* @stage.Image *@
 
-                                                    <img src="@Url.Content($"~/uploads/stages/{stage.Image}")" alt="Immagine dello stage" class="img-fluid" />
+                                                    @if (stage.Image != null)
+                                                    {
+                                                        <img src="@Url.Content($"~/uploads/stages/{stage.Image}")" alt="Immagine dello stage" class="img-fluid" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>No immagine</p>
+                                                    }  
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +173,15 @@
                                                     Descrizione:
                                                 </div>
                                                 <div>
-                                                    <p>@stage.Description</p>   
+                                                    @if (stage.Description != null)
+                                                    {
+                                                        <p>@stage.Description</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p>Nussuna descrizione</p>
+                                                    }
+                                                     
                                                 </div>
                                             </div>
                                         </div>
@@ -199,10 +214,18 @@
                                                 </div>
                                                 <div>
                                                     <!--COnvertire il numero del voto in Icona stella in base al voto-->
-                                                    @for (int i = 0; i < stage.Vote; i++)
+                                                    @if (stage.Vote != null)
                                                     {
-                                                       <i class="fas fa-star text-warning"></i> 
+                                                        @for (int i = 0; i < stage.Vote; i++)
+                                                        {
+                                                            <i class="fas fa-star text-warning"></i>
+                                                        }
                                                     }
+                                                    else
+                                                    {
+                                                        <p>Nessun voto</p>
+                                                    }
+
                                                 </div>
                                             </div>
                                         </div>

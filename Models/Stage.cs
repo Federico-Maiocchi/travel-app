@@ -32,7 +32,7 @@ namespace travel_app.Models
         [Required(ErrorMessage = "Il campo 'TravelId' è obbligatorio.")]
         public int TravelId { get; set; }
 
-        public Travel Travel { get; set; }
+        public Travel? Travel { get; set; }
 
         public bool Completed { get; set; } = false;
     }

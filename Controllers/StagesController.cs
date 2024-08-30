@@ -92,20 +92,76 @@ namespace travel_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Stage stage, IFormFile stagePhoto)
+        public async Task<IActionResult> Create(Stage stage, IFormFile? stagePhoto)
         {
-            stage.CretedById = "Admin";
-            stage.CretedOn = DateTime.Now;
 
-            /*if (ModelState.IsValid)
+            
+
+
+            if (ModelState.IsValid)
             {
+                stage.CretedById = "Admin";
+                stage.CretedOn = DateTime.Now;
+                
+                
+
+                if (stagePhoto != null && stagePhoto.Length > 0)
+                {
+                    var fileName = "StagePhoto_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + stagePhoto.FileName;
+
+                    // Salva l'immagine sotto wwwroot
+                    var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "stages");
+
+                    // Se non esiste rrea la directory 
+                    if (!Directory.Exists(uploadPath))
+                    {
+                        Directory.CreateDirectory(uploadPath);
+                    }
+
+                    var filePath = Path.Combine(uploadPath, fileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await stagePhoto.CopyToAsync(stream);
+                    }
+
+                    stage.Image = fileName; // Salva solo il nome del file nel database
+                }
+                else
+                {
+                    stage.Image = null;
+                }
+                
+                // Aggiungi l'oggetto stage al contesto
                 _context.Add(stage);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
             }
-            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Id", stage.TravelId);
+            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Title", stage.TravelId);
             return View(stage);
-            */
+
+
+            //Codice Scartato
+            /*if (!ModelState.IsValid)
+            {
+                // Debugging per visualizzare gli errori di ModelState
+                foreach (var key in ModelState.Keys)
+                {
+                    var state = ModelState[key];
+                    if (state.Errors.Count > 0)
+                    {
+                        foreach (var error in state.Errors)
+                        {
+                            Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                        }
+                    }
+                }
+
+                ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Id", stage.TravelId);
+                return View(stage);
+            }*/
 
             /*if (stagePhoto.Length > 0)
             {
@@ -122,7 +178,7 @@ namespace travel_app.Controllers
                 stage.Image = fileName;
             }*/
 
-            if (stagePhoto.Length > 0)
+            /*if (stagePhoto.Length > 0)
             {
                 var fileName = "StagePhoto_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + stagePhoto.FileName;
 
@@ -132,7 +188,7 @@ namespace travel_app.Controllers
                 // Se non esiste rrea la directory 
                 if (!Directory.Exists(uploadPath))
                 {
-                    Directory.CreateDirectory(uploadPath); 
+                    Directory.CreateDirectory(uploadPath);
                 }
 
                 var filePath = Path.Combine(uploadPath, fileName);
@@ -149,7 +205,7 @@ namespace travel_app.Controllers
             await _context.SaveChangesAsync();
             //return RedirectToAction(nameof(Index));
 
-            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
+            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });*/
         }
 
         // GET: Stages/Edit/5
@@ -174,17 +230,48 @@ namespace travel_app.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Stage stage, IFormFile stagePhoto)
+        public async Task<IActionResult> Edit(int id, Stage stage, IFormFile? stagePhoto)
         {
             if (id != stage.Id)
             {
                 return NotFound();
             }
 
-            /*if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
+                    stage.ModifiedById = "Admin";
+                    stage.ModifiedOn = DateTime.Now;
+
+                    if (stagePhoto != null && stagePhoto.Length > 0)
+                    {
+                        var fileName = "StagePhoto_" + DateTime.Now.ToString("yyyyMMddHHmmss") + "_" + stagePhoto.FileName;
+
+                        // Salva l'immagine sotto wwwroot
+                        var uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "stages");
+
+                        // Se non esiste, crea la directory 
+                        if (!Directory.Exists(uploadPath))
+                        {
+                            Directory.CreateDirectory(uploadPath);
+                        }
+
+                        var filePath = Path.Combine(uploadPath, fileName);
+
+                        using (var stream = new FileStream(filePath, FileMode.Create))
+                        {
+                            await stagePhoto.CopyToAsync(stream);
+                        }
+
+                        stage.Image = fileName; // Salva solo il nome del file nel database
+                    }
+                    else
+                    {
+                        
+                        stage.Image = null;
+                    }
+
                     _context.Update(stage);
                     await _context.SaveChangesAsync();
                 }
@@ -199,12 +286,15 @@ namespace travel_app.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
             }
-            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Id", stage.TravelId);
+            ViewData["TravelId"] = new SelectList(_context.travels, "Id", "Title", stage.TravelId);
             return View(stage);
-            */
 
+            //Codice Scartato
+
+            /*
             // Trova lo stage corrente nel database
             var currentStage = await _context.stages.AsNoTracking().FirstOrDefaultAsync(s => s.Id == id);
 
@@ -261,7 +351,7 @@ namespace travel_app.Controllers
                 }
             }
             //return RedirectToAction(nameof(Index));
-            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });
+            return RedirectToAction("Details", "Travels", new { id = stage.TravelId });*/
         }
 
         // GET: Stages/Delete/5

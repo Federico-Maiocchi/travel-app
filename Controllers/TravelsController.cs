@@ -68,18 +68,18 @@ namespace travel_app.Controllers
             travel.CretedOn = DateTime.Now;
 
 
-            /*if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _context.Add(travel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(travel);
-            */
 
-            _context.Add(travel);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+
+            //_context.Add(travel);
+            //await _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
         }
 
         // GET: Travels/Edit/5
@@ -110,7 +110,7 @@ namespace travel_app.Controllers
                 return NotFound();
             }
 
-            /*if (ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -131,27 +131,27 @@ namespace travel_app.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(travel);
-            */
 
-            try
-            {
-                travel.ModifiedById = "Admin";
-                travel.ModifiedOn = DateTime.Now;
-                _context.Update(travel);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TravelExists(travel.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+
+            //try
+            //{
+            //    travel.ModifiedById = "Admin";
+            //    travel.ModifiedOn = DateTime.Now;
+            //    _context.Update(travel);
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    if (!TravelExists(travel.Id))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+            //return RedirectToAction(nameof(Index));
         }
 
         // GET: Travels/Delete/5

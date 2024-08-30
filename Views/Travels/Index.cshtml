@@ -3,17 +3,15 @@
 @{
     ViewData["Title"] = "Lista Viaggi";
 }
-
-<h1>Lista Viaggi - Index</h1>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Aggiungi nuovo viaggio</a>
-</p>
-
+<!-- Route Create -->
+<div class="py-2">
+    <a asp-action="Create" class="btn btn-success">Aggiungi nuovo viaggio</a>
+</div>
+<!-- Card -->
 <div class="card">
     <!--Card Header -->
     <div class="card-header">
-        <h3 class="card-title">Lista Viaggi</h3>
+        <h2 class="">Lista Viaggi</h2>   
     </div>
     <!--Card body -->
     <div class="card-body">
@@ -22,55 +20,29 @@
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
+                    <!--TITLE-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Title)-->
-                        
                         Titolo
                     </th>
+                    <!--DESCRIPTION-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Description)-->
-                        
                         Descrizione
                     </th>
+                    <!--STAGES-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Description)-->
                         Tappe
                     </th>
+                    <!--STARTDATE-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.StartDate)-->
-                        
                         Inzio Viaggio
                     </th>
+                    <!--ENDDATE-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.EndDate)-->
-                        
                         Fine Viaggio
-                    </th>
-                    <!-- UserActivity -->
-                    <!--
-                    <th>
-                        @Html.DisplayNameFor(model => model.CretedById)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CretedOn)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ModifiedById)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ModifiedOn)
-                    </th>
-                    -->
-                    
+                    </th>        
                     <!--Pulsanti crud -->
                     <th>
-                        Modifica
-                    </th>
-                    <th>
-                        Dettaglio
-                    </th>
-                    <th>
-                        Cancella
+                       Azioni
                     </th>
                 </tr>
             </thead>
@@ -78,12 +50,15 @@
                 @foreach (var item in Model) {
                         
                         <tr>
+                            <!--TITLE-->
                             <td>
                                 @Html.DisplayFor(modelItem => item.Title)
                             </td>
+                            <!--DESCRIPTION-->
                             <td>
                                 @Html.DisplayFor(modelItem => item.Description)
                             </td>
+                            <!--STAGES-->
                             <td>
                             @if (item.Stages.Count > 0)
                             {
@@ -95,34 +70,34 @@
                             }
 
                             </td>
+                            <!--STARTDATE-->
                             <td>
                                 @Html.DisplayFor(modelItem => item.StartDate)
                             </td>
+                            <!--ENDDATE-->
                             <td>
                                 @Html.DisplayFor(modelItem => item.EndDate)
                             </td>
-                            <!--UserActivity-->
-                            <!--
+                            <!--CRUD EDIT/ DETAILS / DELETE-->
                             <td>
-                                @Html.DisplayFor(modelItem => item.CretedById)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CretedOn)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedById)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ModifiedOn)
-                            </td>
-                            -->
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
-                            <td>
-                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettaglio</a>
-                            </td>
-                            <td>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                <div class="dropdown btn btn-warning">
+                                    <a class="dropdown-toggle text-dark" data-toggle="dropdown" href="#">
+                                        Azioni <span class="caret"></span>
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-item">
+                                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
+                                        </li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item">
+                                            <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
+                                        </li>
+                                        <li class="dropdown-divider"></li>
+                                        <li class="dropdown-item">
+                                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </td>
                         </tr>
                 }

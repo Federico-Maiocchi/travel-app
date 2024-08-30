@@ -1,16 +1,14 @@
 ﻿@model travel_app.Models.Travel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crea Viaggio";
 }
 
-<h1>Aggiungi Viaggio -Travels/Index</h1>
-
+<!--Card-->
 <div class="card">
-    
     <!--Card Header -->
     <div class="card-header">
-        <h4>Creazione nuovo viaggio</h4>
+        <h2>Creazione nuovo viaggio</h2>
     </div>
     <!--Card body -->
     <div class="card-body">
@@ -32,10 +30,10 @@
                         </div>
 
                         <!-- Descrizione -->
-                        <div class="col-md-6 ">
+                        <div class="col-md-12 ">
                             <div class="form-group">
                                 <label asp-for="Description" class="control-label"></label>
-                                <input asp-for="Description" class="form-control" />
+                                <textarea asp-for="Description" class="form-control" > </textarea>
                                 <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
                         </div>

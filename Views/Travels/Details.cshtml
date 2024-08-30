@@ -5,10 +5,19 @@
 @{
     ViewData["Title"] = "Details";
 
+    // Creazione di un oggetto di tipo JsonSerializerOptions per configurare la serializzazione JSON.
     var options = new JsonSerializerOptions
             {
+                // Imposta il ReferenceHandler su 'Preserve'. Questo serve per gestire i riferimenti ciclici
+                // tra gli oggetti durante la serializzazione.
+                // Quando ReferenceHandler.Preserve è abilitato, viene mantenuto un riferimento agli oggetti
+                // già serializzati per evitare loop infiniti e duplicazioni.
                 ReferenceHandler = ReferenceHandler.Preserve
             };
+
+    // Serializzazione di un oggetto (in questo caso 'Model') in una stringa JSON.
+    // Il secondo parametro (options) specifica le opzioni di serializzazione, che in questo caso
+    // includono il preservare i riferimenti agli oggetti per evitare cicli.
     var jsModel = JsonSerializer.Serialize(Model, options);
 }
 
@@ -18,66 +27,15 @@
 
     
 
-<h1>Dettaglio Viaggio - Travels/Edit</h1>
+@* <h1>Dettaglio Viaggio - Travels/Edit</h1> *@
 <div class="card">
     <!--Card body -->
     <div class="card-body">
-        <h4>@Html.DisplayFor(model => model.Title)</h4>
+        <h2>@Html.DisplayFor(model => model.Title)</h2>
         <hr />
-        <!--
-        <dl class="row">
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.Title)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.Title)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.Description)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.Description)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.StartDate)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.StartDate)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.EndDate)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.EndDate)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.CretedById)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.CretedById)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.CretedOn)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.CretedOn)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.ModifiedById)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.ModifiedById)
-            </dd>
-            <dt class = "col-sm-2">
-        @Html.DisplayNameFor(model => model.ModifiedOn)
-            </dt>
-            <dd class = "col-sm-10">
-        @Html.DisplayFor(model => model.ModifiedOn)
-            </dd>
-        </dl>
-        -->
-
+        
         <div class="row">
+            <!--Descrizione-->
             <div class="row">
                 <div class="fw-bold">
                     Descrizione:
@@ -86,40 +44,41 @@
                     @Html.DisplayFor(model => model.Description)
                 </div>
             </div>
-
+            <!--Date-->
             <div class="d-flex pt-3">
+                <!--inizio viaggio-->
                 <div class="col-3 d-flex">
-                    <div class="fw-bold ">
+                    <div class="fw-bold me-2">
                         Data inizio:
                     </div>
-                    <div>
+                    <div class="">
                         @Html.DisplayFor(model => model.StartDate)
                     </div>
                 </div>
-
+                <!--fine viaggio-->
                 <div class="col-3 d-flex">
-                    <div class="fw-bold">
+                    <div class="fw-bold me-2">
                         Data fine:
                     </div>
-                    <div>
+                    <div class="">
                         @Html.DisplayFor(model => model.EndDate)
                     </div>
                 </div>
-
             </div>
-
+            <!--UserActivity Creazione-->
             <div class="d-flex pt-3">
-                <div class="col-3 d-flex">
-                    <div class="fw-bold">
+                <!--Id Creazione-->
+                <div class="col-3 d-flex ">
+                    <div class="fw-bold me-2">
                         Creato da:
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.CretedById)
                     </div>
                 </div>
-
+                <!--Data Creazione-->
                 <div class="col-3 d-flex">
-                    <div class="fw-bold">
+                    <div class="fw-bold me-2">
                         Creato il:
                     </div>
                     <div>
@@ -127,71 +86,67 @@
                     </div>
                 </div>
             </div>
-
+            <!--UserActivity Modifica-->
             <div class="d-flex pt-3">
+                <!--Id Modifica-->
                 <div class="col-3 d-flex">
-                    <div class="fw-bold">
+                    <div class="fw-bold me-2">
                         Modificato da:
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.ModifiedById)
                     </div>
                 </div>
-
+                <!--Data Modifica-->
                 <div class="col-3 d-flex">
-                    <div class="fw-bold">
-                        Nodificato il:
+                    <div class="fw-bold me-2">
+                        Modificato il:
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.ModifiedOn)
                     </div>
                 </div>
             </div>
-
-
+            <!--Tappe-->
             <div class="d-flex align-items-center col-3 pt-5">
                 <div class="d-flex align-items-center me-4">
                     <h3 class=" me-2">Tappe</h3>
+                    <!--Totale tappe presenti in questo viaggio-->
                     <p class="">(@ViewBag.TotalStages)</p>
                 </div>
-
+                <!--Creazione nuova tappa-->
                 <div>
                     <a asp-action="Create" asp-controller="Stages" asp-route-travelId="@Model.Id" class="btn btn-primary">Aggiungi tappa</a>
                 </div>
             </div>
-
 
             @* @Html.DisplayFor(model => model.Stages ); *@
         </div>
 
         <div class="d-flex pt-1">
             <div class="col-6">
-              
+                <!--Controllo lista tappe, 
+                Se ci sono tappe - verranno stampate a modi lista -->
                 @if (Model.Stages != null && Model.Stages.Any())
                 {
+                    //Accordion per la visualizzazione delle tappe.
                     <div class="accordion" id="accordionExample">
                         @foreach (var stage in Model.Stages)
                         {
-                            var uniqueId = $"collapse{stage.Id}"; // Genera un id univoco basato sull'id del stage
-
+                            // Genera un id univoco basato sull'id del stage
+                            var uniqueId = $"collapse{stage.Id}"; 
+                            // Accordion-Item 
                             <div class="accordion-item">
+                                <!--Accordion-Header/ titolo tappa-->
                                 <h2 class="accordion-header" id="heading@stage.Id">
                                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@uniqueId" aria-expanded="false" aria-controls="@uniqueId">
                                         @stage.Title
                                     </button>
                                 </h2>
+                                <!--Accordion-Body/ info tappa-->
                                 <div id="@uniqueId" class="accordion-collapse collapse" aria-labelledby="heading@stage.Id" data-bs-parent="#accordionExample">
                                     <div class="accordion-body">
-                                        <div>
-                                            <div class="row">
-                                                <div class="fw-bold">
-                                                    Descrizione:
-                                                </div>
-                                                <div>
-                                                    @stage.Description
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <!--Immagine-->
                                         <div>
                                             <div class="row">
                                                 <div class="fw-bold">
@@ -204,12 +159,47 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--Descrizione-->
+                                        <div>
+                                            <div class="row">
+                                                <div class="fw-bold">
+                                                    Descrizione:
+                                                </div>
+                                                <div>
+                                                    <p>@stage.Description</p>   
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Se è stata visitata-->
+                                        <div>
+                                            <div class="row">
+                                                <div class="fw-bold">
+                                                    Visitato:
+                                                </div>
+                                                <div>
+                                                    <!--Controllo:
+                                                        Se - la tappa non è stata visitata, viene stampato un messaggio
+                                                    -->
+                                                    @if (@stage.Completed == false)
+                                                    {
+                                                        <p class="text-danger">Non Completata</p>
+                                                    }
+                                                    <!--Altrimenti: messaggio conferma-->
+                                                    else
+                                                    {
+                                                        <p class="text-success">Completata</p>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Voto-->
                                         <div>
                                             <div class="row">
                                                 <div class="fw-bold">
                                                     Voto:
                                                 </div>
                                                 <div>
+                                                    <!--COnvertire il numero del voto in Icona stella in base al voto-->
                                                     @for (int i = 0; i < stage.Vote; i++)
                                                     {
                                                         <i class="fas fa-star text-warning"></i>
@@ -217,6 +207,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!--Pulsanti Crud Tappe-->
                                         <div>
                                             <div class="d-flex">
                                                 <div class="me-3">
@@ -242,12 +233,13 @@
                 }
             </div>
 
+            <!--Visualizzazione della mappa LEAFLET-->
             <div class="col-6">
                 <div id="map" style="width:100%; height:500px"></div>
             </div>
         </div>
 
-        <!--Bottoni-->
+        <!--Bottoni rotte-->
         <div class="form-group pt-5">
             <div class="row">
                 <!-- Modifica -->
@@ -264,38 +256,55 @@
 </div>
 
 
-
+<!--Importazione libreria LEAFLET js-->
 <script src="~/lib/leaflet/leaflet.js"></script>
 <script src="~/lib/leaflet/leaflet-src.min.js"></script>
 
-
 <script>
+    // Creazione della mappa centrata sull'Italia
+    // 'L.map' crea una nuova mappa e la assegna all'elemento con id 'map' (presumibilmente un <div> nell'HTML).
+    // 'setView' imposta il centro della mappa alle coordinate specificate (latitudine 42.6631201, longitudine 14.3033775),
+    // che sono in Italia, e il livello di zoom iniziale a 6.
     const map = L.map('map').setView([42.6631201, 14.3033775], 6);
 
+    // Aggiunta di un layer di tile (le immagini che formano la mappa) alla mappa.
+    // 'L.tileLayer' specifica l'URL del tile server di OpenStreetMap, con {z}, {x}, {y} che rappresentano
+    // rispettivamente il livello di zoom, la coordinata X e la coordinata Y.
+    // 'maxZoom: 19' specifica il massimo livello di zoom possibile per questa mappa.
+    // 'attribution' definisce il testo di attribuzione che verrà mostrato in basso a destra della mappa,
+    // per rispettare le condizioni d'uso di OpenStreetMap.
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        // maxZoom: 19,
+        // maxZoom: 19, // Commentato: il livello massimo di zoom è impostato ma non attivato in questo caso
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    }).addTo(map); // 'addTo(map)' aggiunge il tile layer appena creato alla mappa.
 
+    // Trasforma l'oggetto JavaScript serializzato lato server in un oggetto JS.
+    // 'jsModel' viene creato lato server e reso disponibile nel frontend come un oggetto JavaScript.
+    // '@Html.Raw(jsModel)' viene utilizzato per evitare che il JSON venga codificato in HTML, permettendo
+    // di utilizzarlo direttamente come un oggetto JavaScript.
     let jsModel = @Html.Raw(jsModel);
-    console.log(jsModel);
+    console.log(jsModel); // Stampa il modello JavaScript nella console per verificarne la struttura e il contenuto.
 
-    
+    // Itera su ogni elemento (tappa) nella lista delle tappe (Stages) all'interno di jsModel.
+    // 'jsModel.Stages.$values' è la lista di tappe, dove '$values' è una notazione che potrebbe essere stata
+    // aggiunta dal serializzatore JSON .NET (tipicamente usata con ReferenceHandler.Preserve).
     for (let i = 0; i < jsModel.Stages.$values.length; i++) {
-        let stage = jsModel.Stages.$values[i];
+        let stage = jsModel.Stages.$values[i]; // Estrae la singola tappa dalla lista.
 
-        // Converti la latitudine e la longitudine al formato corretto (se necessario)
-        let latitude = stage.Latitude / 10000000; // Se la latitudine è memorizzata come intero, dividi per 10^7
-        let longitude = stage.Longitude / 10000000; // Se la longitudine è memorizzata come intero, dividi per 10^7
+        // Converti la latitudine e la longitudine dal formato intero (se è stato memorizzato in questo modo)
+        // al formato corretto dividendo per 10^7. Questo è comune quando si lavora con dati geografici
+        // compressi o per risparmiare spazio nei dati.
+        let latitude = stage.Latitude / 10000000;
+        let longitude = stage.Longitude / 10000000;
 
-        // console.log("Latitudine: " + latitude);
-        // console.log("Longitudine: " + longitude);
-
-        // Aggiungi il marker alla mappa con la latitudine e longitudine
+        // Aggiungi un marker alla mappa alle coordinate specificate (latitude, longitude).
+        // 'L.marker' crea un nuovo marker (puntatore sulla mappa).
         L.marker([latitude, longitude]).addTo(map)
-            .bindPopup(stage.Title ) // Mostra il titolo della tappa nel popup
+            // 'bindPopup' associa un popup al marker, che mostrerà il titolo della tappa ('stage.Title')
+            // e, probabilmente, un voto o un'altra informazione (stage.Vote).
+            .bindPopup(stage.Title, stage.Vote)
+            // 'openPopup' apre immediatamente il popup dopo l'aggiunta del marker.
             .openPopup();
-    }
-    
+    }  
 </script>
 

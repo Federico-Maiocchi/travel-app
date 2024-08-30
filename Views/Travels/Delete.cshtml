@@ -1,17 +1,16 @@
 ﻿@model travel_app.Models.Travel
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Elimina viaggio";
 }
 
-<h1>Delete</h1>
-
-
+<!--Card-->
 <div class="card">
     <!--Card body -->
     <div class="card-body">
         <h3>Sei sicuro di cancellare questo viaggio?</h3>
         <hr />
+        <!--dettagli viaggio-->
         <dl class="row">
             <dt class = "col-sm-2">
                 @Html.DisplayNameFor(model => model.Title)

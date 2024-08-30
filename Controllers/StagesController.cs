@@ -29,6 +29,28 @@ namespace travel_app.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        // GET: Stages/Completed
+        public async Task<IActionResult> CompletedStages()
+        {
+            var completedStages = await _context.stages
+                .Include(s => s.Travel)
+                .Where(s => s.Completed == true)
+                .ToListAsync();
+
+            return View(completedStages);
+        }
+
+        // GET: Stages/Incomplete
+        public async Task<IActionResult> IncompleteStages()
+        {
+            var incompleteStages = await _context.stages
+                .Include(s => s.Travel)
+                .Where(s => s.Completed == false)
+                .ToListAsync();
+
+            return View(incompleteStages);
+        }
+
         // GET: Stages/Details/5
         public async Task<IActionResult> Details(int? id)
         {

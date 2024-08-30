@@ -16,78 +16,49 @@
     <!--Card body -->
     <div class="card-body">
         <table id="example1" class="table table-bordered table-striped">
-            <!---->
+            <!--thead-->
             <thead>
                 <tr>
+                    <!--titolo tappa-->
                     <th>
                         <!-- @Html.DisplayNameFor(model => model.Title)-->
                         Titolo
                     </th>
-                    <!--
-                    <th>
-                        @Html.DisplayNameFor(model => model.Description)
-                        Descrizione
-                    </th>
-                    -->
-                    <!--
-                    <th>
-                        @Html.DisplayNameFor(model => model.Image)
-                    </th>
-            
-                    <th>
-                        @Html.DisplayNameFor(model => model.Note)
-                    </th>
-                    -->
+                    <!--Voto tappa-->
                     <th>
                         <!--@Html.DisplayNameFor(model => model.Vote)-->
                         Voto
                     </th>
+                    <!--Data tappa-->
                     <th>
                         <!--@Html.DisplayNameFor(model => model.Date)-->
                         Data
                     </th>
-                    <!--
-                    <th>
-                        @Html.DisplayNameFor(model => model.Latitude)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Longitude)
-                    </th>
+                    <!--Nome viaggio 
+                        la tappa appartiene al seguente viaggio
                     -->
                     <th>
                         <!--@Html.DisplayNameFor(model => model.Travel)-->
                         Nome Viaggio
                     </th>
+                    <!--Visitato - Completed-->
                     <th>
                         <!--@Html.DisplayNameFor(model => model.Completed)-->
                         Visitata
                     </th>
-                    <!--
-                    <th>
-                        @Html.DisplayNameFor(model => model.CretedById)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.CretedOn)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ModifiedById)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ModifiedOn)
-                    </th>
-                    -->
+                    <!--Azioni-->
                     <th> azioni</th>
                 </tr>
             </thead>
-            <!---->
+            <!--tbody-->
             <tbody>
                 @foreach (var item in Model) {
                     <tr>
-                        <!---->
+                        <!--titolo tappa-->
                         <td>
                             @Html.DisplayFor(modelItem => item.Title)
                         </td>
-                        <!---->
+                        <!--voto tappa-->
                         <td>
                             <!--
                             @Html.DisplayFor(modelItem => item.Vote)
@@ -103,14 +74,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Date)
                         </td>
-                        <!---->
+                        <!--Nome del viaggio-->
                         <td>
                             @Html.DisplayFor(modelItem => item.Travel.Title)
                         </td>
+                        <!--Tappa visitata-->
                         <td>
                             @{
                                 var completed = item.Completed;
                             }
+                            <!--in base al valore della proprietà completed
+                                viene stampato un messaggio diverso
+                            -->
                             @if (completed == false)
                             {
                                 <p class="text-danger">Non Visitata</p>
@@ -127,14 +102,17 @@
                                     Azioni <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
+                                    <!--modifica-->
                                     <li class="dropdown-item">
                                         <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa fa-wrench"></i> Modifica</a>
                                     </li>
                                     <li class="dropdown-divider"></li>
+                                    <!--dettagli-->
                                     <li class="dropdown-item">
                                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-warning"><i class="fa fa-eye"></i> Dettagli</a>
                                     </li>
                                     <li class="dropdown-divider"></li>
+                                    <!--elimina-->
                                     <li class="dropdown-item">
                                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger"><i class="fa fa-trash"></i> Cancella</a>
                                     </li>

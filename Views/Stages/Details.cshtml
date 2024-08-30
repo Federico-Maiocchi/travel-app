@@ -1,102 +1,209 @@
-﻿@model travel_app.Models.Stage
+﻿@using System.Text.Json
+@using System.Text.Json.Serialization
+@model travel_app.Models.Stage
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Dettagli Tappa";
+
+    var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve
+            };
+
+    var jsModel = JsonSerializer.Serialize(Model, options);
 }
 
-<h1>Details</h1>
 
-<div>
-    <h4>Stage</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Note)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Note)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Vote)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Vote)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Travel)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Travel.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Completed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Completed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CretedById)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CretedById)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CretedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CretedOn)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedById)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedById)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ModifiedOn)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ModifiedOn)
-        </dd>
-    </dl>
+<!--Card-->
+<div class="card">
+    <div class="card-header">
+        <h2>@Html.DisplayFor(model => model.Title)</h2>
+    </div>
+    <!--Card body -->
+    <div class="card-body">
+        <div class="row">
+            <!--info-->
+            <div class="col-6">
+                <div class="row">
+                    <!--immagine-->
+                    <div class="row">
+                        <div class="fw-bold">
+                            Immagine:
+                        </div>
+                        <div>
+
+                            <img src="@Url.Content($"~/uploads/stages/{Model.Image}")" alt="Immagine dello stage" class="img-fluid" />
+                        </div>
+                    </div>
+                    <!--Data-->
+                    <div class="d-flex pt-3"> 
+                        <div class="col-2 fw-bold me-2">
+                            Data:
+                        </div>
+                        <div class="col-6">
+                            @Html.DisplayFor(model => model.Date)
+                        </div>   
+                    </div>
+                    <!--Cordinate-->
+                    <div class="d-flex pt-3">
+                        <!--Latitudine-->
+                        <div class="col-4 d-flex ">
+                            <div class="fw-bold me-2">
+                                Latitudine:
+                            </div>
+                            <div>
+                                @Html.DisplayFor(model => model.Latitude)
+                            </div>
+                        </div>
+                        <!--Longitudine-->
+                        <div class="col-4 d-flex">
+                            <div class="fw-bold me-2">
+                                Longitudine:
+                            </div>
+                            <div>
+                                @Html.DisplayFor(model => model.Longitude)
+                            </div>
+                        </div>
+                    </div>
+                    <!--Descrizione-->
+                    <div class="row">
+                        <div class="fw-bold">
+                            Descrizione:
+                        </div>
+                        <div>
+                            @Html.DisplayFor(model => model.Description)
+                        </div>
+                    </div>
+                    <!--Nota-->
+                    <div class="row">
+                        <div class="fw-bold">
+                            Nota:
+                        </div>
+                        <div>
+                            @Html.DisplayFor(model => model.Note)
+                        </div>
+                    </div>
+                    <!--Visistato-->
+                    <div class="row">
+                        <div class="fw-bold">
+                            Visitato:
+                        </div>
+                        <div>
+                            <!--Controllo:
+                                     Se - la tappa non è stata visitata, viene stampato un messaggio
+                                 -->
+                            @if (@Model.Completed == false)
+                            {
+                                <p class="text-danger">Non Completata</p>
+                            }
+                            else
+                            {
+                                <p class="text-success">Completata</p>
+                            }
+                        </div>
+                    </div>
+                    <!--Voto-->
+                    <div class="row">
+                        <div class="fw-bold">
+                            Voto:
+                        </div>
+                        <div>
+                            <!--COnvertire il numero del voto in Icona stella in base al voto-->
+                            @for (int i = 0; i < @Model.Vote; i++)
+                            {
+                                <i class="fas fa-star text-warning"></i>
+                            }
+                        </div>
+                    </div>
+                    <!--UserActivity Creazione-->
+                    <div class="d-flex pt-3">
+                        <!--Id Creazione-->
+                        <div class="col-4 d-flex ">
+                            <div class="fw-bold me-2">
+                                Creato da:
+                            </div>
+                            <div>
+                                @Html.DisplayFor(model => model.CretedById)
+                            </div>
+                        </div>
+                        <!--Data Creazione-->
+                        <div class="col-6 d-flex">
+                            <div class="fw-bold me-2">
+                                Creato il:
+                            </div>
+                            <div>
+                                @Html.DisplayFor(model => model.CretedOn)
+                            </div>
+                        </div>
+                    </div>
+                    <!--UserActivity Modifica-->
+                    <div class="d-flex pt-3">
+                        <!--Id Modifica-->
+                        <div class="col-4 d-flex">
+                            <div class="fw-bold me-2">
+                                Modificato da:
+                            </div>
+                            <div>
+                                @Html.DisplayFor(model => model.ModifiedById)
+                            </div>
+                        </div>
+                        <!--Data Modifica-->
+                        <div class="col-6 d-flex">
+                            <div class="fw-bold me-2">
+                                Modificato il:
+                            </div>
+                            <div>
+                                @Html.DisplayFor(model => model.ModifiedOn)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--mappa-->
+            <div class="col-6">
+                <!--Visualizzazione della mappa LEAFLET-->
+                <div id="map" style="width:100%; height:100%"></div> 
+            </div>
+        </div>
+        
+        
+
+        <!--Bottoni rotte-->
+        <div class="form-group pt-5">
+            <div class="row">
+                <!-- Modifica -->
+                <div class="col-md-2 ">
+                    <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Modifica</a>
+                </div>
+                <!-- Torna all' Travels/INDEX -->
+                <div class="col-md-2 ">
+                    <a asp-action="Index" class="btn btn-danger">Torna Alla lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<script src="~/lib/leaflet/leaflet.js"></script>
+<script src="~/lib/leaflet/leaflet-src.min.js"></script>
+
+<script>
+    
+    const map = L.map('map').setView([42.6631201, 14.3033775], 5);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        // maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    let jsModel = @Html.Raw(jsModel);
+    // console.log(jsModel);
+
+    let latitude = jsModel.Latitude / 10000000;
+    let longitude = jsModel.Longitude / 10000000;
+
+    L.marker([latitude, longitude]).addTo(map)
+            .bindPopup(jsModel.Title)
+            .openPopup();
+    
+</script>

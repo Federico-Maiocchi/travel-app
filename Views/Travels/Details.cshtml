@@ -38,7 +38,7 @@
             <!--Descrizione-->
             <div class="row">
                 <div class="fw-bold">
-                    Descrizione:
+                    @Html.DisplayNameFor(model => model.Description):
                 </div>
                 <div>
                     @Html.DisplayFor(model => model.Description)
@@ -49,7 +49,7 @@
                 <!--inizio viaggio-->
                 <div class="col-3 d-flex">
                     <div class="fw-bold me-2">
-                        Data inizio:
+                        @Html.DisplayNameFor(model => model.StartDate):
                     </div>
                     <div class="">
                         @Html.DisplayFor(model => model.StartDate)
@@ -58,7 +58,7 @@
                 <!--fine viaggio-->
                 <div class="col-3 d-flex">
                     <div class="fw-bold me-2">
-                        Data fine:
+                        @Html.DisplayNameFor(model => model.EndDate):
                     </div>
                     <div class="">
                         @Html.DisplayFor(model => model.EndDate)
@@ -70,7 +70,7 @@
                 <!--Id Creazione-->
                 <div class="col-3 d-flex ">
                     <div class="fw-bold me-2">
-                        Creato da:
+                        @Html.DisplayNameFor(model => model.CretedById):
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.CretedById)
@@ -79,7 +79,7 @@
                 <!--Data Creazione-->
                 <div class="col-3 d-flex">
                     <div class="fw-bold me-2">
-                        Creato il:
+                        @Html.DisplayNameFor(model => model.CretedOn):
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.CretedOn)
@@ -91,7 +91,7 @@
                 <!--Id Modifica-->
                 <div class="col-3 d-flex">
                     <div class="fw-bold me-2">
-                        Modificato da:
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.ModifiedById)
@@ -100,7 +100,7 @@
                 <!--Data Modifica-->
                 <div class="col-3 d-flex">
                     <div class="fw-bold me-2">
-                        Modificato il:
+                        @Html.DisplayNameFor(model => model.ModifiedOn)
                     </div>
                     <div>
                         @Html.DisplayFor(model => model.ModifiedOn)

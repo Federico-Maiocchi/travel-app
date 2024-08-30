@@ -19,28 +19,23 @@
                 <tr>
                     <!--titolo-->
                     <th>
-                        <!-- @Html.DisplayNameFor(model => model.Title)-->
-                        Titolo
+                        @Html.DisplayNameFor(model => model.Title)
                     </th>
                     <!--voto-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Vote)-->
-                        Voto
+                        @Html.DisplayNameFor(model => model.Vote)
                     </th>
                     <!--data-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Date)-->
-                        Data
+                        @Html.DisplayNameFor(model => model.Date)
                     </th>
                     <!--Nome viaggio ID-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Travel)-->
-                        Nome Viaggio
+                        @Html.DisplayNameFor(model => model.Travel)
                     </th>
                     <!--visitato-->
                     <th>
-                        <!--@Html.DisplayNameFor(model => model.Completed)-->
-                        Completata
+                        @Html.DisplayNameFor(model => model.Completed)
                     </th>
                     <!--azioni-->
                     <th> azioni</th>
@@ -63,9 +58,17 @@
                             @{
                                 var vote = item.Vote;
                             }
-                            @for (int i = 0; i < vote; i++)
+                            
+                            @if (vote != null)
                             {
-                                <i class="fas fa-star text-warning"></i>
+                                @for (int i = 0; i < vote; i++)
+                                {
+                                    <i class="fas fa-star text-warning"></i>
+                                }
+                            }
+                            else
+                            {
+                                <p>Nessun voto</p>
                             }
                         </td>
                         <!--data-->

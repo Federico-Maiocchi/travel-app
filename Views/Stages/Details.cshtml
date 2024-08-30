@@ -28,7 +28,7 @@
                     <!--immagine-->
                     <div class="row">
                         <div class="fw-bold">
-                            Immagine:
+                            @Html.DisplayNameFor(model => model.Image):
                         </div>
                         <div>
 
@@ -38,7 +38,7 @@
                     <!--Data-->
                     <div class="d-flex pt-3"> 
                         <div class="col-2 fw-bold me-2">
-                            Data:
+                            @Html.DisplayNameFor(model => model.Date):
                         </div>
                         <div class="col-6">
                             @Html.DisplayFor(model => model.Date)
@@ -49,7 +49,7 @@
                         <!--Latitudine-->
                         <div class="col-4 d-flex ">
                             <div class="fw-bold me-2">
-                                Latitudine:
+                                @Html.DisplayNameFor(model => model.Latitude):
                             </div>
                             <div>
                                 @Html.DisplayFor(model => model.Latitude)
@@ -58,7 +58,7 @@
                         <!--Longitudine-->
                         <div class="col-4 d-flex">
                             <div class="fw-bold me-2">
-                                Longitudine:
+                                @Html.DisplayNameFor(model => model.Longitude):
                             </div>
                             <div>
                                 @Html.DisplayFor(model => model.Longitude)
@@ -68,7 +68,7 @@
                     <!--Descrizione-->
                     <div class="row">
                         <div class="fw-bold">
-                            Descrizione:
+                            @Html.DisplayNameFor(model => model.Description):
                         </div>
                         <div>
                             @Html.DisplayFor(model => model.Description)
@@ -77,7 +77,7 @@
                     <!--Nota-->
                     <div class="row">
                         <div class="fw-bold">
-                            Nota:
+                            @Html.DisplayNameFor(model => model.Note):
                         </div>
                         <div>
                             @Html.DisplayFor(model => model.Note)
@@ -86,7 +86,7 @@
                     <!--Visistato-->
                     <div class="row">
                         <div class="fw-bold">
-                            Visitato:
+                            @Html.DisplayNameFor(model => model.Completed):
                         </div>
                         <div>
                             <!--Controllo:
@@ -105,14 +105,23 @@
                     <!--Voto-->
                     <div class="row">
                         <div class="fw-bold">
-                            Voto:
+                            @Html.DisplayNameFor(model => model.Vote):
                         </div>
                         <div>
                             <!--COnvertire il numero del voto in Icona stella in base al voto-->
-                            @for (int i = 0; i < @Model.Vote; i++)
+
+                            @if(@Model.Vote != null)
                             {
-                                <i class="fas fa-star text-warning"></i>
+                                @for (int i = 0; i < @Model.Vote; i++)
+                                {
+                                    <i class="fas fa-star text-warning"></i>
+                                }
                             }
+                            else
+                            {
+                                <p>Nessun voto</p>
+                            }
+
                         </div>
                     </div>
                     <!--UserActivity Creazione-->
@@ -120,7 +129,7 @@
                         <!--Id Creazione-->
                         <div class="col-4 d-flex ">
                             <div class="fw-bold me-2">
-                                Creato da:
+                                @Html.DisplayNameFor(model => model.CretedById):
                             </div>
                             <div>
                                 @Html.DisplayFor(model => model.CretedById)
@@ -129,7 +138,7 @@
                         <!--Data Creazione-->
                         <div class="col-6 d-flex">
                             <div class="fw-bold me-2">
-                                Creato il:
+                                @Html.DisplayNameFor(model => model.CretedOn):
                             </div>
                             <div>
                                 @Html.DisplayFor(model => model.CretedOn)
@@ -141,7 +150,7 @@
                         <!--Id Modifica-->
                         <div class="col-4 d-flex">
                             <div class="fw-bold me-2">
-                                Modificato da:
+                                @Html.DisplayNameFor(model => model.ModifiedById):
                             </div>
                             <div>
                                 @Html.DisplayFor(model => model.ModifiedById)
@@ -150,7 +159,7 @@
                         <!--Data Modifica-->
                         <div class="col-6 d-flex">
                             <div class="fw-bold me-2">
-                                Modificato il:
+                                @Html.DisplayNameFor(model => model.ModifiedOn):
                             </div>
                             <div>
                                 @Html.DisplayFor(model => model.ModifiedOn)
